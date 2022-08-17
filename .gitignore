@@ -25,3 +25,5 @@ debian/tmp/
 test/data/
 
 *.docstring.h
+
+build/
