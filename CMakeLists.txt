@@ -11,6 +11,9 @@ include_directories("${OpenCV_INCLUDE_DIRS}")
 
 # headers and sources
 set(
+    INCLUDE_HPP
+)
+set(
     SRC_HPP
     "ChESS.h"
     "mrgingham-internal.h"
@@ -21,7 +24,7 @@ set(
 )
 set(
     SRC_CPP
-    "ChESS.c"
+    "ChESS.cc"
     "find_blobs.cc"
     "find_chessboard_corners.cc"
     "find_grid.cc"

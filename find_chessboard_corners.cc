@@ -6,10 +6,7 @@
 #include "point.hh"
 #include "mrgingham-internal.h"
 
-extern "C"
-{
 #include "ChESS.h"
-}
 
 // The various tunable parameters
 

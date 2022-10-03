@@ -53,8 +53,8 @@
  *                     image. If stored densely, w == stride
  */
 __attribute__((visibility("default")))
-void mrgingham_ChESS_response_5(      int16_t* restrict response,
-                                const uint8_t* restrict image,
+void mrgingham_ChESS_response_5(      int16_t* __restrict__ response,
+                                const uint8_t* __restrict__ image,
                                 int w, int h, int stride )
 {
     int x, y;
