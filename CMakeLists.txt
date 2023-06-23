@@ -32,11 +32,27 @@ set(
 )
 
 # Library
-add_library(mrgingham_lib STATIC ${INCLUDE_HPP} ${SRC_HPP} ${SRC_CPP})
+add_library(mrgingham_lib ${INCLUDE_HPP} ${SRC_HPP} ${SRC_CPP})
 target_include_directories(mrgingham_lib PUBLIC ${PROJECT_SOURCE_DIR})
 target_link_libraries(mrgingham_lib PUBLIC ${OpenCV_LIBS}) 
 set_target_properties(mrgingham_lib PROPERTIES LINKER_LANGUAGE CXX)
 
-# # Binary
-# add_executable(mrgingham_bin "mrgingham-from-image.cc")
-# target_link_libraries(mrgingham_bin PRIVATE mrgingham_lib)
+# Binary
+
+add_executable(mrgingham_bin "mrgingham-from-image.cc")
+target_link_libraries(mrgingham_bin PRIVATE mrgingham_lib)
+
+# Gennerate usage header
+find_package( PythonInterp 3 REQUIRED )
+add_custom_target(
+ generate_usage ALL
+ COMMAND ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/generate_usage.py 
+ WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+ BYPRODUCTS mrgingham.usage.h
+ COMMENT "Generating usage header"
+)
+add_dependencies(mrgingham_bin generate_usage)
+
+set(THREADS_PREFER_PTHREAD_FLAG ON)
+find_package(Threads REQUIRED)
+target_link_libraries(mrgingham_bin PRIVATE Threads::Threads)

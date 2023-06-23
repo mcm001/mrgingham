@@ -337,10 +337,10 @@ int main(int argc, char* argv[])
     ctx.image_pyramid_level = image_pyramid_level;
 
     pthread_t thread[jobs];
-    for(int i=0; i<jobs; i++)
+    for(unsigned int i=0; i<jobs; i++)
         pthread_create(&thread[i], NULL, &worker, (void*)i);
 
-    for(int i=0; i<jobs; i++)
+    for(unsigned int i=0; i<jobs; i++)
         pthread_join(thread[i], NULL);
 
     globfree(&_glob);

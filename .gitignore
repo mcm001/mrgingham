@@ -27,3 +27,5 @@ test/data/
 *.docstring.h
 
 build/
+
+mrgingham.usage.h
