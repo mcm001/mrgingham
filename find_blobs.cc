@@ -3,6 +3,7 @@
 
 #include "point.hh"
 #include "mrgingham-internal.h"
+#include "windows_defines.h"
 
 using namespace mrgingham;
 
@@ -10,7 +11,7 @@ namespace mrgingham
 {
 
 
-__attribute__((visibility("default")))
+WPI_EXPORT
 bool find_blobs_from_image_array( std::vector<PointInt>* points,
                                   const cv::Mat& image,
                                   bool dodump )
@@ -45,7 +46,7 @@ bool find_blobs_from_image_array( std::vector<PointInt>* points,
     return true;
 }
 
-__attribute__((visibility("default")))
+WPI_EXPORT
 bool find_blobs_from_image_file( std::vector<PointInt>* points,
                                  const char* filename,
                                  bool dodump )

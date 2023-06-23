@@ -3,6 +3,7 @@
 #include <opencv2/core/core.hpp>
 #include <vector>
 #include "point.hh"
+#include "windows_defines.h"
 
 
 // I look for white-on-black dots
@@ -21,11 +22,13 @@ namespace mrgingham
         {}
     };
 
+    WPI_EXPORT
     bool find_circle_grid_from_image_array( std::vector<mrgingham::PointDouble>& points_out,
                                             const cv::Mat& image,
                                             const int gridn,
                                             bool debug = false,
                                             debug_sequence_t debug_sequence = debug_sequence_t());
+    WPI_EXPORT
     bool find_circle_grid_from_image_file( std::vector<mrgingham::PointDouble>& points_out,
                                            const char* filename,
                                            const int gridn,
@@ -75,6 +78,7 @@ namespace mrgingham
     // *RESPONSIBILITY TO free() IT
     //
     // Returns the pyramid level where we found the grid, or <0 on failure
+    WPI_EXPORT
     int find_chessboard_from_image_file( std::vector<mrgingham::PointDouble>& points_out,
                                          signed char**                        refinement_level,
                                          const int                            gridn,
@@ -83,6 +87,7 @@ namespace mrgingham
                                          bool                                 debug               = false,
                                          debug_sequence_t                     debug_sequence = debug_sequence_t());
 
+    WPI_EXPORT
     bool find_grid_from_points( std::vector<mrgingham::PointDouble>& points_out,
                                 const std::vector<mrgingham::PointInt>& points,
                                 const int gridn,

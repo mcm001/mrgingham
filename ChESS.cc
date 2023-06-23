@@ -36,6 +36,8 @@
  * IN THE SOFTWARE.
  */
 
+#include "windows_defines.h"
+
 #include <stdint.h>
 #include <stdlib.h>
 
@@ -52,9 +54,9 @@
  * @param    stride    the length (in bytes) of each row in memory of the input
  *                     image. If stored densely, w == stride
  */
-__attribute__((visibility("default")))
-void mrgingham_ChESS_response_5(      int16_t* __restrict__ response,
-                                const uint8_t* __restrict__ image,
+// WPI_EXPORT
+void mrgingham_ChESS_response_5(      int16_t* WPI_RESTRICT response,
+                                const uint8_t* WPI_RESTRICT image,
                                 int w, int h, int stride )
 {
     int x, y;

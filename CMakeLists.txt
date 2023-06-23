@@ -9,6 +9,9 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 find_package(OpenCV REQUIRED)
 include_directories("${OpenCV_INCLUDE_DIRS}")
 
+FIND_PACKAGE( Boost 1.52 )
+INCLUDE_DIRECTORIES( ${Boost_INCLUDE_DIR} )
+
 # headers and sources
 set(
     INCLUDE_HPP
@@ -34,13 +37,11 @@ set(
 # Library
 add_library(mrgingham_lib ${INCLUDE_HPP} ${SRC_HPP} ${SRC_CPP})
 target_include_directories(mrgingham_lib PUBLIC ${PROJECT_SOURCE_DIR})
-target_link_libraries(mrgingham_lib PUBLIC ${OpenCV_LIBS}) 
+target_link_libraries(mrgingham_lib PUBLIC ${OpenCV_LIBS} ${Boost_LIBRARIES}) 
 set_target_properties(mrgingham_lib PROPERTIES LINKER_LANGUAGE CXX)
 
-# Binary
-
-add_executable(mrgingham_bin "mrgingham-from-image.cc")
-target_link_libraries(mrgingham_bin PRIVATE mrgingham_lib)
+add_executable(mrgingham_bin mrgingham-from-image_win.cc)
+target_link_libraries(mrgingham_bin PUBLIC mrgingham_lib) 
 
 # Gennerate usage header
 find_package( PythonInterp 3 REQUIRED )

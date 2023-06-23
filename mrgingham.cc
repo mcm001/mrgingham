@@ -1,13 +1,15 @@
 #include "mrgingham.hh"
 #include "find_blobs.hh"
 #include "find_chessboard_corners.hh"
+#include "windows_defines.h"
+#include "windows_defines.h"
 
 #include <opencv2/highgui/highgui.hpp>
 
 
 namespace mrgingham
 {
-    __attribute__((visibility("default")))
+    WPI_EXPORT
     bool find_circle_grid_from_image_array( std::vector<PointDouble>& points_out,
                                             const cv::Mat& image,
                                             const int gridn,
@@ -20,7 +22,7 @@ namespace mrgingham
                                      debug, debug_sequence);
     }
 
-    __attribute__((visibility("default")))
+    WPI_EXPORT
     bool find_circle_grid_from_image_file( std::vector<PointDouble>& points_out,
                                            const char* filename,
                                            const int gridn,
@@ -35,7 +37,7 @@ namespace mrgingham
 
     // *refinement_level is managed by realloc(). IT IS THE CALLER'S
     // *RESPONSIBILITY TO free() IT
-    static bool _find_chessboard_from_image_array( std::vector<PointDouble>& points_out,
+    bool _find_chessboard_from_image_array( std::vector<PointDouble>& points_out,
                                                    signed char** refinement_level,
                                                    const cv::Mat& image,
                                                    int image_pyramid_level,
@@ -102,7 +104,6 @@ namespace mrgingham
 
     // *refinement_level is managed by realloc(). IT IS THE CALLER'S
     // *RESPONSIBILITY TO free() IT
-    __attribute__((visibility("default")))
     int find_chessboard_from_image_array( std::vector<PointDouble>& points_out,
                                           signed char** refinement_level,
                                           const int gridn,
@@ -141,7 +142,7 @@ namespace mrgingham
 
     // *refinement_level is managed by realloc(). IT IS THE CALLER'S
     // *RESPONSIBILITY TO free() IT
-    __attribute__((visibility("default")))
+    WPI_EXPORT
     int find_chessboard_from_image_file( std::vector<PointDouble>& points_out,
                                          signed char** refinement_level,
                                          const int gridn,

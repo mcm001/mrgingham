@@ -5,6 +5,7 @@
 
 #include "point.hh"
 #include "mrgingham-internal.h"
+#include "windows_defines.h"
 
 #include "ChESS.h"
 
@@ -398,10 +399,12 @@ static int process_connected_components(int w, int h, int16_t* d,
     if(debug)
     {
         fclose(debugfp);
+#ifdef WPI_LINUX
         chmod(debug_filename,
               S_IRUSR | S_IRGRP | S_IROTH |
               S_IWUSR | S_IWGRP |
               S_IXUSR | S_IXGRP | S_IXOTH);
+#endif
     }
 
     return N;
@@ -474,7 +477,7 @@ apply_image_pyramid_scaling(// out
 
 #define CHESS_RESPONSE_FILENAME                     "/tmp/mrgingham-chess-response%s-level%d.png"
 #define CHESS_RESPONSE_POSITIVE_FILENAME            "/tmp/mrgingham-chess-response%s-level%d-positive.png"
-static
+
 int _find_or_refine_chessboard_corners_from_image_array ( // out
                                                           std::vector<mrgingham::PointInt>* points_scaled_out,
 
@@ -561,7 +564,7 @@ int _find_or_refine_chessboard_corners_from_image_array ( // out
                                      7);
 }
 
-__attribute__((visibility("default")))
+// WPI_EXPORT
 bool find_chessboard_corners_from_image_array( // out
 
                                               // integers scaled up by
@@ -584,7 +587,7 @@ bool find_chessboard_corners_from_image_array( // out
 }
 
 // Returns how many points were refined
-__attribute__((visibility("default")))
+// WPI_EXPORT
 int refine_chessboard_corners_from_image_array( // out/int
 
                                                 // initial coordinates on input,
@@ -616,7 +619,7 @@ int refine_chessboard_corners_from_image_array( // out/int
 }
 
 
-__attribute__((visibility("default")))
+WPI_EXPORT
 bool find_chessboard_corners_from_image_file( // out
 
                                               // integers scaled up by

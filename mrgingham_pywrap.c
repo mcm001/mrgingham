@@ -299,7 +299,7 @@ static PyMethodDef methods[] =
 
 #if PY_MAJOR_VERSION == 2
 
-__attribute__((visibility("default")))
+WPI_EXPORT
 PyMODINIT_FUNC initmrgingham(void)
 {
     Py_InitModule3("mrgingham", methods,

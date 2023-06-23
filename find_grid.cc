@@ -1,3 +1,6 @@
+#define _USE_MATH_DEFINES
+#include <cmath>
+
 #include <sys/stat.h>
 #include <stdio.h>
 #include <vector>
@@ -9,6 +12,7 @@
 #include "point.hh"
 #include "mrgingham.hh"
 #include "mrgingham-internal.h"
+#include "windows_defines.h"
 
 using namespace mrgingham;
 
@@ -415,11 +419,13 @@ static void dump_voronoi( const VORONOI* voronoi,
         }
     }
     fclose(fp);
+#ifdef WPI_LINUX
     chmod(DUMP_FILENAME_VORONOI,
           S_IRUSR | S_IRGRP | S_IROTH |
           S_IWUSR | S_IWGRP |
           S_IXUSR | S_IXGRP | S_IXOTH);
     fprintf(stderr, "Wrote self-plotting voronoi diagram to " DUMP_FILENAME_VORONOI "\n");
+#endif
 }
 
 static void dump_interval( FILE* fp,
@@ -655,10 +661,13 @@ static void _dump_candidates(const char* filename_sparse,
         }
 
     fclose(fp);
+
+#ifdef WPI_LINUX
     chmod(filename_sparse,
           S_IRUSR | S_IRGRP | S_IROTH |
           S_IWUSR | S_IWGRP |
           S_IXUSR | S_IXGRP | S_IXOTH);
+#endif
     fprintf(stderr, "Wrote self-plotting sequence-candidate dump to %s\n",
             filename_sparse);
 
@@ -722,10 +731,12 @@ static void dump_outer_edge_cycles(const std::vector<outer_cycle>& outer_cycles,
     }
 
     fclose(fp);
+#ifdef WPI_LINUX
     chmod(DUMP_BASENAME_OUTER_EDGE_CYCLES,
           S_IRUSR | S_IRGRP | S_IROTH |
           S_IWUSR | S_IWGRP |
           S_IXUSR | S_IXGRP | S_IXOTH);
+#endif
     fprintf(stderr, "Wrote outer edge cycle dump to %s\n",
             DUMP_BASENAME_OUTER_EDGE_CYCLES);
 }
@@ -769,10 +780,12 @@ static void dump_outer_edge_cycles_identified(const std::vector<outer_cycle>& ou
     }
 
     fclose(fp);
+#ifdef WPI_LINUX
     chmod(DUMP_BASENAME_IDENTIFIED_OUTER_EDGE_CYCLE,
           S_IRUSR | S_IRGRP | S_IROTH |
           S_IWUSR | S_IWGRP |
           S_IXUSR | S_IXGRP | S_IXOTH);
+#endif
     fprintf(stderr, "Wrote outer edge cycle dump to %s\n",
             DUMP_BASENAME_IDENTIFIED_OUTER_EDGE_CYCLE);
 }
@@ -1213,7 +1226,7 @@ static int find_sequence_from_to( // inputs
     }
 }
 
-__attribute__((visibility("default")))
+WPI_EXPORT
 bool mrgingham::find_grid_from_points( // out
                                       std::vector<PointDouble>& points_out,
 
@@ -1392,17 +1405,22 @@ bool mrgingham::find_grid_from_points( // out
     }
 
     // sequences in sequence_candidates[]
-    int horizontal_rows[gridn];
+    // int horizontal_rows[gridn];
+    std::vector<int> horizontal_rows {gridn};
     int vertical_left, vertical_right;
 
     horizontal_rows[0] = outer_edges[outer_cycles[outer_cycle_pair[  iclockwise]].e[  iedge_top[  iclockwise]          ]];
     vertical_left      = outer_edges[outer_cycles[outer_cycle_pair[1-iclockwise]].e[ (iedge_top[1-iclockwise] + 1) % 4 ]];
     vertical_right     = outer_edges[outer_cycles[outer_cycle_pair[  iclockwise]].e[ (iedge_top[  iclockwise] + 1) % 4 ]];
 
-    unsigned int vertical_left_points [gridn];
-    unsigned int vertical_right_points[gridn];
-    get_candidate_points( vertical_left_points,  &sequence_candidates[vertical_left ], points, gridn );
-    get_candidate_points( vertical_right_points, &sequence_candidates[vertical_right], points, gridn );
+    // unsigned int vertical_left_points [gridn];
+    // unsigned int vertical_right_points[gridn];
+    std::vector<unsigned int> vertical_left_points;
+    std::vector<unsigned int> vertical_right_points;
+    vertical_left_points.reserve(gridn);
+    vertical_right_points.reserve(gridn);
+    get_candidate_points( vertical_left_points.data(),  &sequence_candidates[vertical_left ], points, gridn );
+    get_candidate_points( vertical_right_points.data(), &sequence_candidates[vertical_right], points, gridn );
 
     for(int i=1; i<gridn; i++)
     {
