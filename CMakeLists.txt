@@ -40,7 +40,11 @@ target_include_directories(mrgingham_lib PUBLIC ${PROJECT_SOURCE_DIR})
 target_link_libraries(mrgingham_lib PUBLIC ${OpenCV_LIBS} ${Boost_LIBRARIES}) 
 set_target_properties(mrgingham_lib PROPERTIES LINKER_LANGUAGE CXX)
 
-add_executable(mrgingham_bin mrgingham-from-image_win.cc)
+if (MSVC)
+    add_executable(mrgingham_bin mrgingham-from-image_win.cc)
+else()
+    add_executable(mrgingham_bin mrgingham-from-image.cc)
+endif()
 target_link_libraries(mrgingham_bin PUBLIC mrgingham_lib) 
 
 # Gennerate usage header
