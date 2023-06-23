@@ -26,6 +26,7 @@
         "xutility": "cpp",
         "ranges": "cpp",
         "span": "cpp",
-        "xstring": "cpp"
+        "xstring": "cpp",
+        "xhash": "cpp"
     }
 }

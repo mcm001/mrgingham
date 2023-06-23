@@ -860,6 +860,12 @@ static bool next_outer_edge(// this iteration
     const std::vector<int>* next_edges;
     try
     {
+        if (outer_edges_from_point.find(last_point_this_edge) == outer_edges_from_point.end()) {
+            if (debug) {
+                fprintf(stderr, "Index out of range?\n");
+            }
+            return false;
+        }
         next_edges = &outer_edges_from_point.at(last_point_this_edge);
     }
     catch(...)
@@ -1406,7 +1412,8 @@ bool mrgingham::find_grid_from_points( // out
 
     // sequences in sequence_candidates[]
     // int horizontal_rows[gridn];
-    std::vector<int> horizontal_rows {gridn};
+    std::vector<int> horizontal_rows;
+    horizontal_rows.resize(gridn);
     int vertical_left, vertical_right;
 
     horizontal_rows[0] = outer_edges[outer_cycles[outer_cycle_pair[  iclockwise]].e[  iedge_top[  iclockwise]          ]];
@@ -1417,8 +1424,8 @@ bool mrgingham::find_grid_from_points( // out
     // unsigned int vertical_right_points[gridn];
     std::vector<unsigned int> vertical_left_points;
     std::vector<unsigned int> vertical_right_points;
-    vertical_left_points.reserve(gridn);
-    vertical_right_points.reserve(gridn);
+    vertical_left_points.resize(gridn);
+    vertical_right_points.resize(gridn);
     get_candidate_points( vertical_left_points.data(),  &sequence_candidates[vertical_left ], points, gridn );
     get_candidate_points( vertical_right_points.data(), &sequence_candidates[vertical_right], points, gridn );
 

@@ -1,6 +1,7 @@
 #include "mrgingham.hh"
 #include <stdio.h>
 #include <thread>
+#include <iostream>
 
 #include "windows_defines.h"
 
@@ -68,6 +69,14 @@ void worker( int ijob )
             funlockfile(stdout);
             break;
         }
+
+        using std::cout;
+        using std::endl;
+        using std::chrono::duration_cast;
+        using std::chrono::milliseconds;
+        using std::chrono::seconds;
+        using std::chrono::system_clock;
+        auto start = duration_cast<milliseconds>(system_clock::now().time_since_epoch()).count();
 
         if( ctx.doclahe )
         {
@@ -144,6 +153,10 @@ void worker( int ijob )
             result = (found_pyramid_level >= 0);
         }
 
+        auto end = duration_cast<milliseconds>(system_clock::now().time_since_epoch()).count();
+        auto dt = end-start;
+        std::cout << "dt: " << dt << " ms" << endl;
+
         flockfile(stdout);
         {
             if( result )
@@ -165,9 +178,6 @@ void worker( int ijob )
 
 int main()
 {
-    printf("hello world!");
-    return 0;
-
     const char* usage =
 #include "mrgingham.usage.h"
         ;
@@ -195,8 +205,8 @@ int main()
     PointInt    debug_sequence_pt;
     int         blur_radius         = 1;
     int         image_pyramid_level = -1;
-    int         jobs                = 1;
-    int         gridn               = 10;
+    int         jobs                = 4;
+    int         gridn               = 7;
 
     // int opt;
     // do
@@ -325,7 +335,26 @@ int main()
     // fork. I want to make sure that the image output is atomic. To do that I
     // use flockfile(), and each child thread writes directly to stdout.
     // flockfile() does not work in a fork, but does work in a thread
-    ctx.imagePaths          = {"\\wsl.localhost\\Ubuntu-20.04\\home\\matt\\chessboards\\run_1\\1686868691216310024.jpeg"}; // TODO
+    ctx.imagePaths          = {
+        "C:\\Users\\mcmorley\\Documents\\GitHub\\mrgingham\\testimgs\\1686868697564383507.jpeg",
+        "C:\\Users\\mcmorley\\Documents\\GitHub\\mrgingham\\testimgs\\1686868691216310024.jpeg",
+        "C:\\Users\\mcmorley\\Documents\\GitHub\\mrgingham\\testimgs\\1686868989860271931.jpeg",
+        "C:\\Users\\mcmorley\\Documents\\GitHub\\mrgingham\\testimgs\\1686868697564383507.jpeg",
+        "C:\\Users\\mcmorley\\Documents\\GitHub\\mrgingham\\testimgs\\1686868691216310024.jpeg",
+        "C:\\Users\\mcmorley\\Documents\\GitHub\\mrgingham\\testimgs\\1686868989860271931.jpeg",
+        "C:\\Users\\mcmorley\\Documents\\GitHub\\mrgingham\\testimgs\\1686868697564383507.jpeg",
+        "C:\\Users\\mcmorley\\Documents\\GitHub\\mrgingham\\testimgs\\1686868691216310024.jpeg",
+        "C:\\Users\\mcmorley\\Documents\\GitHub\\mrgingham\\testimgs\\1686868989860271931.jpeg",
+        "C:\\Users\\mcmorley\\Documents\\GitHub\\mrgingham\\testimgs\\1686868697564383507.jpeg",
+        "C:\\Users\\mcmorley\\Documents\\GitHub\\mrgingham\\testimgs\\1686868691216310024.jpeg",
+        "C:\\Users\\mcmorley\\Documents\\GitHub\\mrgingham\\testimgs\\1686868989860271931.jpeg",
+        "C:\\Users\\mcmorley\\Documents\\GitHub\\mrgingham\\testimgs\\1686868697564383507.jpeg",
+        "C:\\Users\\mcmorley\\Documents\\GitHub\\mrgingham\\testimgs\\1686868691216310024.jpeg",
+        "C:\\Users\\mcmorley\\Documents\\GitHub\\mrgingham\\testimgs\\1686868989860271931.jpeg",
+        "C:\\Users\\mcmorley\\Documents\\GitHub\\mrgingham\\testimgs\\1686868697564383507.jpeg",
+        "C:\\Users\\mcmorley\\Documents\\GitHub\\mrgingham\\testimgs\\1686868691216310024.jpeg",
+        "C:\\Users\\mcmorley\\Documents\\GitHub\\mrgingham\\testimgs\\1686868989860271931.jpeg",
+    }; // TODO
     ctx.Njobs               = jobs;
     ctx.doclahe             = doclahe;
     ctx.blur_radius         = blur_radius;

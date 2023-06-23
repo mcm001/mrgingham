@@ -57,3 +57,6 @@ add_dependencies(mrgingham_bin generate_usage)
 set(THREADS_PREFER_PTHREAD_FLAG ON)
 find_package(Threads REQUIRED)
 target_link_libraries(mrgingham_bin PRIVATE Threads::Threads)
+
+add_executable(opencv_test opencv_test.cc)
+target_link_libraries(opencv_test PUBLIC ${OpenCV_LIBS}) 
