@@ -4,8 +4,8 @@
 #include "windows_defines.h"
 
 #include <getopt.h>
-// #include <glob.h>
-// #include <pthread.h>
+#include <glob.h>
+#include <pthread.h>
 
 #include <opencv2/core/core.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
