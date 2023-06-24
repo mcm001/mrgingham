@@ -65,3 +65,36 @@ jobs:
       with:
         name: libmrgingham
         path: ${{github.workspace}}/build/*.so
+
+  release:
+    needs: [build-ubuntu, build-raspi]
+    runs-on: ubuntu-22.04
+    steps:
+      # Download literally every single artifact. This also downloads client and docs,
+      # but the filtering below won't pick these up (I hope)
+      - uses: actions/download-artifact@v2
+
+      - run: find
+
+      # Push to dev release on pushes to master
+      - uses: pyTooling/Actions/releaser@r0
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          tag: 'Dev'
+          rm: true
+          files: |
+            ${{github.workspace}}/build/*.dll
+            ${{github.workspace}}/build/*.so
+            ${{github.workspace}}/build/*.dylib
+        if: github.event_name == 'push'
+
+      # Push to actual release, if tagged
+      - uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            ${{github.workspace}}/build/*.dll
+            ${{github.workspace}}/build/*.so
+            ${{github.workspace}}/build/*.dylib
+        if: startsWith(github.ref, 'refs/tags/v')
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
