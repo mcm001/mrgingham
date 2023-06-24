@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 3.23)
 project(mrgingham LANGUAGES CXX VERSION 1.0.0)
 
+option(BUILD_SHARED_LIBS "Build shared libraries" ON)
+
 # C++
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -11,6 +13,13 @@ include_directories("${OpenCV_INCLUDE_DIRS}")
 
 FIND_PACKAGE( Boost 1.52 )
 INCLUDE_DIRECTORIES( ${Boost_INCLUDE_DIR} )
+
+find_package(JNI)
+if (JNI_FOUND)
+    # Fixes odd AWT dependency
+    set (JNI_INCLUDE_DIRS ${JAVA_INCLUDE_PATH} ${JAVA_INCLUDE_PATH2})
+    message (STATUS "JNI_INCLUDE_DIRS=${JNI_INCLUDE_DIRS}")
+endif()
 
 # headers and sources
 set(
@@ -32,11 +41,12 @@ set(
     "find_chessboard_corners.cc"
     "find_grid.cc"
     "mrgingham.cc"
+    "MrginghamJNI.cpp"
 )
 
 # Library
 add_library(mrgingham_lib ${INCLUDE_HPP} ${SRC_HPP} ${SRC_CPP})
-target_include_directories(mrgingham_lib PUBLIC ${PROJECT_SOURCE_DIR})
+target_include_directories(mrgingham_lib PUBLIC ${PROJECT_SOURCE_DIR} ${JNI_INCLUDE_DIRS})
 target_link_libraries(mrgingham_lib PUBLIC ${OpenCV_LIBS} ${Boost_LIBRARIES}) 
 set_target_properties(mrgingham_lib PROPERTIES LINKER_LANGUAGE CXX)
 
