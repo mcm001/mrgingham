@@ -9,8 +9,9 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # OpenCV
-find_package(OpenCV REQUIRED)
-include_directories("${OpenCV_INCLUDE_DIRS}")
+#set(OpenCV_STATIC ON)
+#find_package(OpenCV REQUIRED)
+#include_directories("${OpenCV_INCLUDE_DIRS}")
 
 # Grab boost
 include(FetchContent)
@@ -61,8 +62,8 @@ set(
 
 # Library
 add_library(mrgingham ${INCLUDE_HPP} ${SRC_HPP} ${SRC_CPP})
-target_include_directories(mrgingham PUBLIC ${PROJECT_SOURCE_DIR} ${JNI_INCLUDE_DIRS})
-target_link_libraries(mrgingham PUBLIC ${OpenCV_LIBS} Boost::polygon)
+target_include_directories(mrgingham PUBLIC ${PROJECT_SOURCE_DIR} ${JNI_INCLUDE_DIRS} "/home/matt/Documents/opencv-linux-extract/headers")
+target_link_libraries(mrgingham PUBLIC ${OpenCV_LIBS} Boost::polygon "/home/matt/Documents/opencv-linux-extract/linux/x86-64/static/libopencv460.a")
 set_target_properties(mrgingham PROPERTIES LINKER_LANGUAGE CXX)
 
 if (MSVC)
