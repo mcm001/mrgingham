@@ -50,7 +50,7 @@ jobs:
       with:
         base_image: raspios_lite_arm64:latest
         cpu: cortex-a7
-        image_additional_mb: 1500
+        image_additional_mb: 2500
         bind_mount_repository: true
         commands: |
           sudo apt update
