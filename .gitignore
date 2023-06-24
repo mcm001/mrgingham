@@ -27,5 +27,6 @@ test/data/
 *.docstring.h
 
 build/
+build-docker/
 
 mrgingham.usage.h
