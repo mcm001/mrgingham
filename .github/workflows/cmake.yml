@@ -33,7 +33,7 @@ jobs:
 
     - name: Build
       # Build your program with the given configuration
-      run: cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}}
+      run: cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}} -j
 
     - uses: actions/upload-artifact@v3
       name: Upload image
@@ -57,7 +57,8 @@ jobs:
           sudo apt -y upgrade
           sudo apt install libopencv-features2d-dev libopencv-highgui-dev libopencv-core-dev libvisp-imgproc-dev libboost-dev cmake build-essential default-jdk -y
           cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
-          cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}}
+          cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}} -j
+          find .
 
     - uses: actions/upload-artifact@v3
       name: Upload image
