@@ -55,7 +55,7 @@ jobs:
         commands: |
           sudo apt update
           sudo apt -y upgrade
-          sudo apt install libopencv-features2d-dev libopencv-highgui-dev libopencv-core-dev libvisp-imgproc-dev libboost-dev cmake build-essential -y
+          sudo apt install libopencv-features2d-dev libopencv-highgui-dev libopencv-core-dev libvisp-imgproc-dev libboost-dev cmake build-essential default-jdk -y
           cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
           cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}}
 
