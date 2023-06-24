@@ -12,8 +12,22 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 find_package(OpenCV REQUIRED)
 include_directories("${OpenCV_INCLUDE_DIRS}")
 
-FIND_PACKAGE( Boost 1.52 )
-INCLUDE_DIRECTORIES( ${Boost_INCLUDE_DIR} )
+# Grab boost
+include(FetchContent)
+
+FetchContent_Declare(
+  boost_polygon
+  GIT_REPOSITORY https://github.com/boostorg/polygon
+  GIT_TAG 8ba35b57c1436c4b36f7544aadd78c2b24acc7db
+)
+FetchContent_MakeAvailable(boost_polygon)
+
+FetchContent_Declare(
+  boost_config
+  GIT_REPOSITORY https://github.com/boostorg/config
+  GIT_TAG a1cf5d531405e62927b0257b5cb
+)
+FetchContent_MakeAvailable(boost_config)
 
 find_package(JNI)
 if (JNI_FOUND)
@@ -48,7 +62,7 @@ set(
 # Library
 add_library(mrgingham ${INCLUDE_HPP} ${SRC_HPP} ${SRC_CPP})
 target_include_directories(mrgingham PUBLIC ${PROJECT_SOURCE_DIR} ${JNI_INCLUDE_DIRS})
-target_link_libraries(mrgingham PUBLIC ${OpenCV_LIBS} ${Boost_LIBRARIES}) 
+target_link_libraries(mrgingham PUBLIC ${OpenCV_LIBS} Boost::polygon)
 set_target_properties(mrgingham PROPERTIES LINKER_LANGUAGE CXX)
 
 if (MSVC)
