@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.23)
+cmake_minimum_required(VERSION 3.22)
 project(mrgingham LANGUAGES CXX VERSION 1.0.0)
 
 option(BUILD_SHARED_LIBS "Build shared libraries" ON)
@@ -45,17 +45,17 @@ set(
 )
 
 # Library
-add_library(mrgingham_lib ${INCLUDE_HPP} ${SRC_HPP} ${SRC_CPP})
-target_include_directories(mrgingham_lib PUBLIC ${PROJECT_SOURCE_DIR} ${JNI_INCLUDE_DIRS})
-target_link_libraries(mrgingham_lib PUBLIC ${OpenCV_LIBS} ${Boost_LIBRARIES}) 
-set_target_properties(mrgingham_lib PROPERTIES LINKER_LANGUAGE CXX)
+add_library(mrgingham ${INCLUDE_HPP} ${SRC_HPP} ${SRC_CPP})
+target_include_directories(mrgingham PUBLIC ${PROJECT_SOURCE_DIR} ${JNI_INCLUDE_DIRS})
+target_link_libraries(mrgingham PUBLIC ${OpenCV_LIBS} ${Boost_LIBRARIES}) 
+set_target_properties(mrgingham PROPERTIES LINKER_LANGUAGE CXX)
 
 if (MSVC)
     add_executable(mrgingham_bin mrgingham-from-image_win.cc)
 else()
     add_executable(mrgingham_bin mrgingham-from-image.cc)
 endif()
-target_link_libraries(mrgingham_bin PUBLIC mrgingham_lib) 
+target_link_libraries(mrgingham_bin PUBLIC mrgingham) 
 
 # Gennerate usage header
 find_package( PythonInterp 3 REQUIRED )
@@ -72,5 +72,5 @@ set(THREADS_PREFER_PTHREAD_FLAG ON)
 find_package(Threads REQUIRED)
 target_link_libraries(mrgingham_bin PRIVATE Threads::Threads)
 
-add_executable(opencv_test opencv_test.cc)
-target_link_libraries(opencv_test PUBLIC ${OpenCV_LIBS}) 
+# add_executable(opencv_test opencv_test.cc)
+# target_link_libraries(opencv_test PUBLIC ${OpenCV_LIBS}) 
