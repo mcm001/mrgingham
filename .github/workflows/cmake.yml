@@ -38,7 +38,7 @@ jobs:
     - uses: actions/upload-artifact@v3
       name: Upload image
       with:
-        name: libmrgingham
+        name: libmrgingham-ubuntu
         path: ${{github.workspace}}/build/*.so
 
   build-raspi:
@@ -63,7 +63,7 @@ jobs:
     - uses: actions/upload-artifact@v3
       name: Upload image
       with:
-        name: libmrgingham
+        name: libmrgingham-pi
         path: ${{github.workspace}}/build/*.so
 
   release:
