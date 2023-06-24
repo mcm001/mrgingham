@@ -21,4 +21,8 @@ class MrginghamJNI {
         return (PointDouble[]) detectChessboardNative(imageNativeObj, doClAHE, blurRadius, do_refine);
     }
 
+    public static void main(String[] args) {
+        System.load("/home/matt/Documents/GitHub/mrgingham/build/libmrgingham.so");
+    }
+
 }

@@ -8,11 +8,11 @@
 extern "C" {
 #endif
 /*
- * Class:     MrginghamJNI
+ * Class:     org_mrgingham_MrginghamJNI
  * Method:    detectChessboardNative
- * Signature: (JZI)[Ljava/lang/Object;
+ * Signature: (JZIZI)[Ljava/lang/Object;
  */
-JNIEXPORT jobjectArray JNICALL Java_MrginghamJNI_detectChessboardNative
+JNIEXPORT jobjectArray JNICALL Java_org_mrgingham_MrginghamJNI_detectChessboardNative
   (JNIEnv *, jclass, jlong, jboolean, jint, jboolean, jint);
 
 #ifdef __cplusplus

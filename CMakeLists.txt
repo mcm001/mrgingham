@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 3.18)
 project(mrgingham LANGUAGES CXX VERSION 1.0.0)
 
 option(BUILD_SHARED_LIBS "Build shared libraries" ON)
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 # C++
 set(CMAKE_CXX_STANDARD 17)

@@ -58,7 +58,7 @@ extern "C"
             return JNI_ERR;
         }
 
-        detectionClass = JClass(env, "org/photonvision/mrgingham/DetectionResult");
+        detectionClass = JClass(env, "org/mrgingham/PointDouble");
 
         if (!detectionClass)
         {
@@ -94,7 +94,7 @@ extern "C"
         return ret;
     }
 
-    JNIEXPORT jobjectArray JNICALL Java_MrginghamJNI_detectChessboardNative(JNIEnv *env, jclass, jlong matPtr, jboolean doclahe, jint blur_radius, jboolean do_refine, jint gridn)
+    JNIEXPORT jobjectArray JNICALL Java_org_mrgingham_MrginghamJNI_detectChessboardNative(JNIEnv *env, jclass, jlong matPtr, jboolean doclahe, jint blur_radius, jboolean do_refine, jint gridn)
     {
         cv::Ptr<cv::CLAHE> clahe;
 
@@ -126,12 +126,12 @@ extern "C"
         // Stuff I need to fill in. Not sure if this is all correct...
         int image_pyramid_level = -1;
         bool debug = false;
-        mrgingham::debug_sequence_t debug_sequence {};
+        mrgingham::debug_sequence_t debug_sequence{};
 
         std::vector<mrgingham::PointDouble> points_out;
         bool result;
         int found_pyramid_level; // need this because ctx.image_pyramid_level could be -1
-        const char* debug_image_filename = nullptr;
+        const char *debug_image_filename = nullptr;
 
         found_pyramid_level =
             mrgingham::find_chessboard_from_image_array(points_out,
@@ -142,6 +142,8 @@ extern "C"
                                                         debug, debug_sequence,
                                                         debug_image_filename);
         result = (found_pyramid_level >= 0);
+
+        printf("Found %i corners\n", points_out.size());
 
         // Object array to return to Java
         jobjectArray jarr = env->NewObjectArray(points_out.size(), detectionClass, nullptr);
