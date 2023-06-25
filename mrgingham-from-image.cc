@@ -290,7 +290,7 @@ int main(int argc, char* argv[])
         int globresult =
             glob(imageglob,
                  doappend |
-                 GLOB_ERR | GLOB_MARK | GLOB_NOSORT | GLOB_TILDE_CHECK,
+                 GLOB_ERR | GLOB_MARK | GLOB_NOSORT,
                  NULL, &_glob);
         if(globresult == GLOB_NOMATCH)
         {
