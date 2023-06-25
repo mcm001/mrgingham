@@ -58,6 +58,8 @@ file(GLOB_RECURSE OPENCV_LIB_PATH
 )
 SET(OPENCV_INCLUDE_PATH ${opencv_header_SOURCE_DIR})
 
+message("OpenCV lib path: ${OPENCV_LIB_PATH}")
+
 
 find_package(JNI)
 if (JNI_FOUND)

@@ -52,6 +52,7 @@ namespace mrgingham
     // *RESPONSIBILITY TO free() IT
     //
     // Returns the pyramid level where we found the grid, or <0 on failure
+    WPI_EXPORT
     int  find_chessboard_from_image_array( std::vector<mrgingham::PointDouble>& points_out,
                                            signed char**                        refinement_level,
                                            const int                            gridn,

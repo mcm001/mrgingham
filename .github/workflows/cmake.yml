@@ -47,7 +47,7 @@ jobs:
 
     - name: Build
       # Build your program with the given configuration
-      run: cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}} -j
+      run: cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}} ${{ (startsWith(matrix.arch-name, 'windowx86-64') && '--config Release') || '' }} -j
 
     - uses: actions/upload-artifact@v3
       name: Upload build lib
