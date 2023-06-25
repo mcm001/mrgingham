@@ -56,13 +56,13 @@ jobs:
       run: cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}} ${{ (startsWith(matrix.arch-name, 'windowx86-64') && '--config Release') || '' }} -j
 
     - name: Rename artifact
-      run: mv ${{ env.lib-src }} ${{ env.lib-dst }}
+      run: mv ${{ matrix.lib-src }} ${{ matrix.lib-dst }}
 
     - uses: actions/upload-artifact@master
       with:
         name: libmrgingham-${{ matrix.arch-name }}
         path: |
-          ${{ env.lib-dst }}
+          ${{ matrix.lib-dst }}
 
   build-raspi:
     runs-on: ubuntu-latest
