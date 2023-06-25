@@ -21,7 +21,7 @@ jobs:
           - os: windows-latest
             arch-name: windowsx86-64
             lib-src: build/Release/mrgingham.dll
-            lib-dst: build/Release/mrgingham_winx86-64.dll
+            lib-dst: build/Release/libmrgingham_winx86-64.dll
           - os: macos-12
             arch-name: osxuniversal
             lib-src: build/libmrgingham.dylib
