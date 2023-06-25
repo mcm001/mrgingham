@@ -96,6 +96,7 @@ add_library(mrgingham ${INCLUDE_HPP} ${SRC_HPP} ${SRC_CPP})
 target_include_directories(mrgingham PUBLIC ${PROJECT_SOURCE_DIR} ${JNI_INCLUDE_DIRS} ${OPENCV_INCLUDE_PATH})
 target_link_libraries(mrgingham PUBLIC ${OpenCV_LIBS} Boost::polygon ${OPENCV_LIB_PATH})
 set_target_properties(mrgingham PROPERTIES LINKER_LANGUAGE CXX)
+set_target_properties(mrgingham PROPERTIES CXX_VISIBILITY_PRESET hidden)
 
 if (MSVC)
     add_executable(mrgingham_bin mrgingham-from-image_win.cc)
