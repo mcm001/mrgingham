@@ -55,7 +55,7 @@ jobs:
         path: |
           build/*.so
           build/*.dylib
-          build/*.dll
+          build/Release/*.dll
 
   build-raspi:
     runs-on: ubuntu-latest
@@ -94,6 +94,12 @@ jobs:
 
       - run: find
 
+      - name: Compress outputs
+        run: |
+          sudo apt update
+          sudo apt install zip -y
+          zip -r mrgingham_libs.zip *
+
       # Push to dev release on pushes to master
       - uses: pyTooling/Actions/releaser@r0
         with:
@@ -101,18 +107,14 @@ jobs:
           tag: 'Dev'
           rm: true
           files: |
-            ${{github.workspace}}/build/*.dll
-            ${{github.workspace}}/build/*.so
-            ${{github.workspace}}/build/*.dylib
+            *.zip
         if: github.event_name == 'push'
 
       # Push to actual release, if tagged
       - uses: softprops/action-gh-release@v1
         with:
           files: |
-            ${{github.workspace}}/build/*.dll
-            ${{github.workspace}}/build/*.so
-            ${{github.workspace}}/build/*.dylib
+            *.zip
         if: startsWith(github.ref, 'refs/tags/v')
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
