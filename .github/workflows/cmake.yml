@@ -58,7 +58,7 @@ jobs:
     - name: list syms
       # Build your program with the given configuration
       if: matrix.arch-name == 'osxuniversal'
-      run: nm -gm build/libmrgingham.dylib
+      run: nm -gmC build/libmrgingham.dylib
 
     - name: Build
       # Build your program with the given configuration

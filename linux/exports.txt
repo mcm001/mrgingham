@@ -6,6 +6,7 @@ global:
       mrgingham::find_circle_grid_from_image_array*;
     };
     Java_org_mrgingham_MrginghamJNI_detectChessboardNative;
+    JNI_OnLoad;
 
 local:
     *;
