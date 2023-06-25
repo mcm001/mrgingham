@@ -96,11 +96,11 @@ extern "C"
 
     JNIEXPORT jobjectArray JNICALL Java_org_mrgingham_MrginghamJNI_detectChessboardNative(JNIEnv *env, jclass, jlong matPtr, jboolean doclahe, jint blur_radius, jboolean do_refine, jint gridn)
     {
-        cv::Ptr<cv::CLAHE> clahe;
+        static cv::Ptr<cv::CLAHE> clahe;
 
         cv::Mat &image = *(reinterpret_cast<cv::Mat *>(matPtr));
 
-        if (doclahe)
+        if (doclahe && !clahe)
         {
             clahe = cv::createCLAHE();
             clahe->setClipLimit(8);

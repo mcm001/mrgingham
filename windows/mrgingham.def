@@ -1,0 +1,3 @@
+EXPORTS
+
+    Java_org_mrgingham_MrginghamJNI_detectChessboardNative; 

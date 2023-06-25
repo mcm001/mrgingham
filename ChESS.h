@@ -30,7 +30,6 @@
  * @param    stride    the length (in bytes) of each row in memory of the input
  *                     image. If stored densely, w == stride
  */
-// WPI_EXPORT
 void mrgingham_ChESS_response_5(      int16_t* WPI_RESTRICT response,
                                 const uint8_t* WPI_RESTRICT image,
                                 int w, int h,

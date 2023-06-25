@@ -1,0 +1,3 @@
+Java_org_mrgingham_MrginghamJNI_detectChessboardNative
+mrgingham::find_circle_grid_from_image_array
+mrgingham::find_chessboard_from_image_array
