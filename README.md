@@ -10,3 +10,5 @@ cmake --build . --config Release
 ```
 
 On Linux, just install libboost-dev and libopencv-dev, and build like normal.
+
+We pull OpenCV from WPILib's thirdparty-opencv maven publication

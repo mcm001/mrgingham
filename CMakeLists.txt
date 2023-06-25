@@ -30,6 +30,35 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(boost_config)
 
+set(OPENCV_YEAR "frc2023")
+set(OPENCV_VERSION "4.6.0-5")
+set(OPENCV_ARCH "linuxx86-64")
+
+# type can be "", "debug", "static", or "staticdebug"
+set(OPENCV_TYPE "static")
+
+# Download opencv, and save the path
+FetchContent_Declare(
+    opencv_lib
+    URL https://frcmaven.wpi.edu/artifactory/release/edu/wpi/first/thirdparty/${OPENCV_YEAR}/opencv/opencv-cpp/${OPENCV_VERSION}/opencv-cpp-${OPENCV_VERSION}-${OPENCV_ARCH}${OPENCV_TYPE}.zip
+)
+FetchContent_MakeAvailable(opencv_lib)
+
+# download OpenCV headers
+FetchContent_Declare(
+    opencv_header
+    URL https://frcmaven.wpi.edu/artifactory/release/edu/wpi/first/thirdparty/${OPENCV_YEAR}/opencv/opencv-cpp/${OPENCV_VERSION}/opencv-cpp-${OPENCV_VERSION}-headers.zip
+)
+FetchContent_MakeAvailable(opencv_header)
+
+
+# This probably doesn't work great with shared libraries, but I don't care about those right now
+file(GLOB_RECURSE OPENCV_LIB_PATH 
+  "${opencv_lib_SOURCE_DIR}/**/*"
+)
+SET(OPENCV_INCLUDE_PATH ${opencv_header_SOURCE_DIR})
+
+
 find_package(JNI)
 if (JNI_FOUND)
     # Fixes odd AWT dependency
@@ -62,8 +91,8 @@ set(
 
 # Library
 add_library(mrgingham ${INCLUDE_HPP} ${SRC_HPP} ${SRC_CPP})
-target_include_directories(mrgingham PUBLIC ${PROJECT_SOURCE_DIR} ${JNI_INCLUDE_DIRS} "/home/matt/Documents/opencv-linux-extract/headers")
-target_link_libraries(mrgingham PUBLIC ${OpenCV_LIBS} Boost::polygon "/home/matt/Documents/opencv-linux-extract/linux/x86-64/static/libopencv460.a")
+target_include_directories(mrgingham PUBLIC ${PROJECT_SOURCE_DIR} ${JNI_INCLUDE_DIRS} ${OPENCV_INCLUDE_PATH})
+target_link_libraries(mrgingham PUBLIC ${OpenCV_LIBS} Boost::polygon ${OPENCV_LIB_PATH})
 set_target_properties(mrgingham PROPERTIES LINKER_LANGUAGE CXX)
 
 if (MSVC)

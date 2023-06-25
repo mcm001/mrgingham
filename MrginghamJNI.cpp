@@ -143,7 +143,7 @@ extern "C"
                                                         debug_image_filename);
         result = (found_pyramid_level >= 0);
 
-        printf("Found %i corners\n", points_out.size());
+        // printf("Found %i corners\n", points_out.size());
 
         // Object array to return to Java
         jobjectArray jarr = env->NewObjectArray(points_out.size(), detectionClass, nullptr);
