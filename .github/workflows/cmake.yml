@@ -77,17 +77,16 @@ jobs:
         bind_mount_repository: true
         commands: |
           sudo apt update
-          sudo apt -y upgrade
           sudo apt install cmake build-essential default-jdk git -y
           cmake -B build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -DOPENCV_ARCH=linuxarm64
           cmake --build build --config ${{env.BUILD_TYPE}} -j
-          find .
+          mv build/libmrgingham.so build/libmrgingham_aarch64.so
 
     - uses: actions/upload-artifact@v3
       name: Upload image
       with:
         name: libmrgingham-pi
-        path: ${{github.workspace}}/build/*.so
+        path: build/libmrgingham_aarch64.so
 
 
 
