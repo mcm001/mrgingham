@@ -9,6 +9,13 @@ cmake .. -DBOOST_ROOT="C:\Users\mcmorley\Documents\boost_1_52_0\boost_1_52_0" -D
 cmake --build . --config Release
 ```
 
-On Linux, just install libboost-dev and libopencv-dev, and build like normal.
+We pull OpenCV from WPILib's thirdparty-opencv maven publication automatically. The architecture name needs to be passed in with `-DOPENCV_ARCH`, which is one of:
 
-We pull OpenCV from WPILib's thirdparty-opencv maven publication
+- linuxx86-64
+- linuxarm32
+- linuxarm64
+- osxarm64
+- osxuniversal
+- osxx86-64
+- windowsarm64
+- windowsx86-64

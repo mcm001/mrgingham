@@ -32,7 +32,7 @@ FetchContent_MakeAvailable(boost_config)
 
 set(OPENCV_YEAR "frc2023")
 set(OPENCV_VERSION "4.6.0-5")
-set(OPENCV_ARCH "linuxx86-64")
+# set(OPENCV_ARCH "linuxx86-64")
 
 # type can be "", "debug", "static", or "staticdebug"
 set(OPENCV_TYPE "static")
